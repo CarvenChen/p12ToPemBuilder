@@ -686,21 +686,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fvl-Tz-WB5">
-                                <rect key="frame" x="186" y="91" width="108" height="106"/>
+                            <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g1C-hh-pyK">
+                                <rect key="frame" x="176" y="69" width="128" height="131"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" image="NSAddTemplate" imagePosition="overlaps" alignment="center" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="OnP-z3-kQT">
+                                <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="qGd-4W-5Bq">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
-                                    <action selector="addBtnClicked:" target="XfG-lQ-9wD" id="m41-x2-ofm"/>
+                                    <action selector="addBtnClicked:" target="XfG-lQ-9wD" id="GjT-sa-cIj"/>
                                 </connections>
                             </button>
                         </subviews>
                     </view>
                     <connections>
-                        <outlet property="addBtn" destination="fvl-Tz-WB5" id="BZR-fp-5xC"/>
+                        <outlet property="addBtn" destination="g1C-hh-pyK" id="tK4-pE-HHO"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -708,7 +708,4 @@
             <point key="canvasLocation" x="-100" y="655"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="NSAddTemplate" width="11" height="11"/>
-    </resources>
 </document>
