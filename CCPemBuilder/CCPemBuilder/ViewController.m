@@ -24,9 +24,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    // Do any additional setup after loading the view.
+        
     [self.addBtn setImage:[NSImage imageNamed:@"main_add_icon"]];
+    
 }
+
 
 
 - (IBAction)addBtnClicked:(NSButton *)sender {
@@ -35,8 +39,10 @@
     NSOpenPanel* panel = [NSOpenPanel openPanel];
     [panel beginWithCompletionHandler:^(NSInteger result) {
         
+        //1、选中文件   0、取消选中
         if (result == 1) {
             
+            //处理文件路径
             NSURL *elemnet = [[panel URLs] firstObject];
             NSString *fullPath = [elemnet relativePath];
             
@@ -46,6 +52,7 @@
             NSString *fileName_ = fullPath.lastPathComponent;
             weakSelf.fileName = [fileName_ stringByDeletingPathExtension];
             
+            //开始处理p12文件
             [weakSelf starthandleP12File];
         }
     }];
@@ -59,6 +66,7 @@
 
 - (void)getP12Password {
     
+    //弹框验证p12文件的密码
     __weak typeof(self) weakSelf = self;
     NSAlert *alert = [NSAlert new];
     [alert addButtonWithTitle:@"确定"];
@@ -76,16 +84,17 @@
                 
                 NSString *password = input.stringValue;
                 
+                //生成cer的pem文件
                 NSString *cmdStr = [NSString stringWithFormat:@"openssl pkcs12 -clcerts -nokeys -out %@/%@.pem -in %@ -password pass:%@", _filePath, _fileName, _fullPath, password];
                 NSLog(@"%@", cmdStr);
+                
+                //执行命令
                 system([cmdStr UTF8String]);
                 
                 [weakSelf setPemPassword:password];
             }
             
             
-        }else if(returnCode == NSAlertSecondButtonReturn){
-            NSLog(@"删除");
         }
     }];
 }
@@ -93,7 +102,7 @@
 
 - (void)setPemPassword:(NSString *)password {
     
-    
+    //弹框验证p12文件的密码
     __weak typeof(self) weakSelf = self;
     NSAlert *alert = [NSAlert new];
     [alert addButtonWithTitle:@"确定"];
@@ -114,6 +123,7 @@
                 NSLog(@"%@", cmdStr);
                 system([cmdStr UTF8String]);
                 
+                //选择最终文件的存储位置
                 NSSavePanel *panel = [NSSavePanel savePanel];
                 [panel setNameFieldStringValue:@"ck.pem"];
                 [panel setMessage:@"选择您需要存储的位置"];
@@ -126,10 +136,6 @@
                         [weakSelf unitPemFile:path];
                     }
                 }];
-            }
-            else {
-                
-                
             }
         }
     }];
