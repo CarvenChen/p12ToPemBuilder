@@ -24,13 +24,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    // Do any additional setup after loading the view.
-        
-    [self.addBtn setImage:[NSImage imageNamed:@"main_add_icon"]];
     
+    [self.addBtn setImage:[NSImage imageNamed:@"main_add_icon"]];
 }
-
 
 
 - (IBAction)addBtnClicked:(NSButton *)sender {
@@ -118,7 +114,18 @@
                 NSLog(@"%@", cmdStr);
                 system([cmdStr UTF8String]);
                 
-                [weakSelf unitPemFile];
+                NSSavePanel *panel = [NSSavePanel savePanel];
+                [panel setNameFieldStringValue:@"ck.pem"];
+                [panel setMessage:@"选择您需要存储的位置"];
+
+                [panel beginSheetModalForWindow:[self.view window] completionHandler:^(NSInteger result){
+                    if (result == NSFileHandlingPanelOKButton)
+                    {
+                        NSString *path = [[panel URL] path];
+                        
+                        [weakSelf unitPemFile:path];
+                    }
+                }];
             }
             else {
                 
@@ -128,10 +135,10 @@
     }];
 }
 
-- (void)unitPemFile {
-    
+- (void)unitPemFile:(NSString *)savePath {
+ 
     //合成
-    NSString *cmdStr = [NSString stringWithFormat:@"cat %@/%@.pem %@/%@_key.pem > %@/ck.pem", _filePath, _fileName, _filePath, _fileName, _filePath];
+    NSString *cmdStr = [NSString stringWithFormat:@"cat %@/%@.pem %@/%@_key.pem > %@", _filePath, _fileName, _filePath, _fileName, savePath];
     NSLog(@"%@", cmdStr);
     system([cmdStr UTF8String]);
     
@@ -146,31 +153,6 @@
     system([cmdStr UTF8String]);
 }
 
-
-
-
-
-
-//        生成文件夹
-//        system("mkdir /Users/apple/Desktop/test");
-
-- (void)save {
-    
-    NSSavePanel *panel = [NSSavePanel savePanel];
-    [panel setNameFieldStringValue:@"ck.pem"];
-    [panel setMessage:@"Choose the path to save the document"];
-    [panel setAllowsOtherFileTypes:YES];
-    [panel setAllowedFileTypes:@[@"pem"]];
-    [panel setExtensionHidden:YES];
-    [panel setCanCreateDirectories:YES];
-    [panel beginSheetModalForWindow:[NSApplication sharedApplication].keyWindow completionHandler:^(NSInteger result){
-        if (result == NSFileHandlingPanelOKButton)
-        {
-            NSString *path = [[panel URL] path];
-            [@"onecodego" writeToFile:path atomically:YES encoding:NSUTF8StringEncoding error:nil];
-        }
-    }];
-}
 
 - (void)setRepresentedObject:(id)representedObject {
     [super setRepresentedObject:representedObject];
