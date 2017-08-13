@@ -26,7 +26,7 @@
     [super viewDidLoad];
 
     // Do any additional setup after loading the view.
-    
+        
     [self.addBtn setImage:[NSImage imageNamed:@"main_add_icon"]];
     
 }
