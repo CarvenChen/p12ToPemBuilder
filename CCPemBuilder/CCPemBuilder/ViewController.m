@@ -8,7 +8,7 @@
 
 #import "ViewController.h"
 
-@interface ViewController () 
+@interface ViewController ()
 
 @property (weak) IBOutlet NSButton *addBtn;
 
